@@ -7,11 +7,13 @@
   transition: opacity 120ms linear !important; /* override default */
 }
 
+.pswp-caption-content {
+  display: none;
+}
+
 .pswp__dynamic-caption a {
   color: #fff;
 }
-
-
 
 .pswp__dynamic-caption--faded {
   opacity: 0 !important;

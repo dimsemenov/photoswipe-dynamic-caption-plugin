@@ -2,7 +2,7 @@ The caption plugin for PhotoSwipe v5, can automatically position the text below 
 
 ## Intiailization
 
-The plugin has a single JS `photoswipe-dynamic-caption-plugin.esm.js` and a single CSS file `photoswipe-dynamic-caption-plugin.css`.
+The plugin has a single JS file `photoswipe-dynamic-caption-plugin.esm.js` and a single CSS file `photoswipe-dynamic-caption-plugin.css`.
 
 It can be initialized like this:
 
@@ -14,14 +14,13 @@ import PhotoSwipeDynamicCaption from './photoswipe-dynamic-caption-plugin.esm.js
 const lightbox = new PhotoSwipeLightbox({
   gallerySelector: '#gallery',
   childSelector: '.pswp-gallery__item',
-  
+  pswpModule: './photoswipe.esm.js',
+   
   // Optional padding for images
   paddingTop: 30,
   paddingBottom: 30,
   paddingLeft: 70,
-  paddingRight: 70,
-
-  pswpModule: './photoswipe.esm.js'
+  paddingRight: 70
 });
 
 const captionPlugin = new PhotoSwipeDynamicCaption(lightbox, {
@@ -34,7 +33,7 @@ lightbox.init();
 </script>
 ```
 
-
+Also refer to `example.html`.
 
 ## Plugin options
 
@@ -80,7 +79,7 @@ Automatically disable paddingTop/Left/Right/Bottom when mobile layout is used.
   - while it's aside: `pswp__dynamic-caption--aside`
   - while mobile layout is used: `pswp__dynamic-caption--mobile`
 
-Feel free to adjust it in the plugin CSS file:
+Feel free to adjust it in the plugin CSS file (and use media queries if you need):
 
 ```css
 .pswp__dynamic-caption--aside {
@@ -97,6 +96,8 @@ Feel free to adjust it in the plugin CSS file:
   padding: 10px 15px;
 }
 ```
+
+
 
 ## How 'auto' positioning works
 
