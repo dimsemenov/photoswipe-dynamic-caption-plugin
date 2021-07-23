@@ -1,4 +1,6 @@
-The caption plugin for PhotoSwipe v5, can automatically position the text below or aside depending on the available space. Recommended for small to medium sized captions.
+# Dynamic caption plugin for [PhotoSwipe](https://photoswipe.com/) v5
+
+The plugin can automatically position the text below or aside depending on the available space. Recommended for small to medium sized captions.
 
 ## Intiailization
 
@@ -59,7 +61,7 @@ Position type of the caption, can be 'auto', 'below', or 'aside'.
 
 #### `mobileLayoutBreakpoint: 600`
 
-Maximum window width at which mobile layout should be used, or a function that should return true if mobile layou should be used. For example:
+Maximum window width at which mobile layout should be used, or a function that should return true if mobile layout should be used. For example:
   
 ```js
 mobileLayoutBreakpoint: (pswp, captionPlugin) => {
