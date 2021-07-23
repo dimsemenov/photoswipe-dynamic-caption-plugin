@@ -1,8 +1,8 @@
 ## Dynamic caption plugin for [PhotoSwipe](https://photoswipe.com/) v5
 
-The plugin can automatically position the text below or aside depending on the available space. For small to medium sized captions.
-
 **[> Plugin demo <](https://dimsemenov.github.io/photoswipe-dynamic-caption-plugin/)**
+
+The plugin can automatically position the text below or aside depending on the available space. For small to medium sized captions. For accessibility, make sure that important captions are always available without PhotoSwipe  - either use an `alt` attribute on thumbnails or `aria-labelledby`.
 
 ### Intiailization
 
