@@ -85,6 +85,22 @@ class PhotoSwipeDynamicCaption {
         this.showCaption();
       }
     });
+
+    pswp.on('beforeZoomTo', (e) => {
+      const { currSlide } = pswp;
+
+      if (currSlide.dynamicCaptionPanAreaSize) {
+        if (e.destZoomLevel > currSlide.zoomLevels.initial) {
+          // Disable panAreaSize override right before we're zooming in
+          currSlide.panAreaSize.x = pswp.viewportSize.x - (pswp.options.paddingLeft || 0) - (pswp.options.paddingRight || 0),
+          currSlide.panAreaSize.y = pswp.viewportSize.y - (pswp.options.paddingTop || 0) - (pswp.options.paddingBottom || 0);
+        } else {
+          // Restore panAreaSize after we zoom back to initial position
+          currSlide.panAreaSize.x = currSlide.dynamicCaptionPanAreaSize.x;
+          currSlide.panAreaSize.y = currSlide.dynamicCaptionPanAreaSize.y;
+        }
+      }
+    });
   }
 
   useMobileLayout() {
@@ -264,9 +280,19 @@ class PhotoSwipeDynamicCaption {
       // mobile
     }
 
+    this.storePanAreaSize(slide);
+
     if (slide === this.pswp.currSlide) {
       this.updateCurrentCaptionPosition();
     }
+  }
+
+  storePanAreaSize(slide) {
+    if (!slide.dynamicCaptionPanAreaSize) {
+      slide.dynamicCaptionPanAreaSize = {};
+    }
+    slide.dynamicCaptionPanAreaSize.x = slide.panAreaSize.x;
+    slide.dynamicCaptionPanAreaSize.y = slide.panAreaSize.y;
   }
 
   enableSlidePadding() {
