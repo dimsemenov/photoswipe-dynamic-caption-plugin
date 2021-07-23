@@ -1,8 +1,8 @@
-# Dynamic caption plugin for [PhotoSwipe](https://photoswipe.com/) v5
+## Dynamic caption plugin for [PhotoSwipe](https://photoswipe.com/) v5
 
 The plugin can automatically position the text below or aside depending on the available space. Recommended for small to medium sized captions.
 
-## Intiailization
+### Intiailization
 
 The plugin has a single JS file `photoswipe-dynamic-caption-plugin.esm.js` and a single CSS file `photoswipe-dynamic-caption-plugin.css`.
 
@@ -37,7 +37,7 @@ lightbox.init();
 
 Also refer to `example.html`.
 
-## Plugin options
+### Plugin options
 
 #### `captionContent: '.pswp-caption-content'`
 
@@ -74,7 +74,7 @@ mobileLayoutBreakpoint: (pswp, captionPlugin) => {
 Automatically disable paddingTop/Left/Right/Bottom when mobile layout is used.
   
 
-## Styling
+### Styling
 
 - The caption has class `pswp__dynamic-caption`, additionally:
   - while it's below the main image: `pswp__dynamic-caption--below`
@@ -101,7 +101,7 @@ Feel free to adjust it in the plugin CSS file (and use media queries if you need
 
 
 
-## How 'auto' positioning works
+### How 'auto' positioning works
 
 - Check if there is more horizontal or vertical free space around the image.
 - If there is more free vertical space:
