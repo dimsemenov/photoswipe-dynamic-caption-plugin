@@ -2,6 +2,8 @@
 
 The plugin can automatically position the text below or aside depending on the available space. For small to medium sized captions.
 
+**[> Plugin demo <](https://dimsemenov.github.io/photoswipe-dynamic-caption-plugin/)**
+
 ### Intiailization
 
 The plugin has a single JS file `photoswipe-dynamic-caption-plugin.esm.js` and a single CSS file `photoswipe-dynamic-caption-plugin.css`.
