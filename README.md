@@ -37,7 +37,7 @@ lightbox.init();
 </script>
 ```
 
-Also refer to `example.html`.
+Also refer the source of the demo page - [index.html](https://github.com/dimsemenov/photoswipe-dynamic-caption-plugin/blob/main/index.html).
 
 ### Plugin options
 
