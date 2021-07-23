@@ -78,10 +78,13 @@ Automatically disable paddingTop/Left/Right/Bottom when mobile layout is used.
 
 ### Styling
 
-- The caption has class `pswp__dynamic-caption`, additionally:
-  - while it's below the main image: `pswp__dynamic-caption--below`
-  - while it's aside: `pswp__dynamic-caption--aside`
-  - while mobile layout is used: `pswp__dynamic-caption--mobile`
+The caption has class `pswp__dynamic-caption`.
+
+It can be in one of these states:
+
+- Below the main image - `pswp__dynamic-caption--below`.
+- Right side of the main image - `pswp__dynamic-caption--aside`.
+- "Mobile" (by default just pinned to bottom) - `pswp__dynamic-caption--mobile`
 
 Feel free to adjust it in the plugin CSS file (and use media queries if you need):
 
