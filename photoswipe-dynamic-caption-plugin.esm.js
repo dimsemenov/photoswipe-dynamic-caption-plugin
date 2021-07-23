@@ -121,6 +121,15 @@ class PhotoSwipeDynamicCaption {
     if (!this.isCaptionHidden) {
       this.isCaptionHidden = true;
       this.captionElement.classList.add('pswp__dynamic-caption--faded');
+
+      // Disable caption visibility with the delay, so it's not interactable 
+      if (this.captionFadeTimeout) {
+        clearTimeout(this.captionFadeTimeout);
+      }
+      this.captionFadeTimeout = setTimeout(() => {
+        this.captionElement.style.visibility = 'hidden';
+        this.captionFadeTimeout = null;
+      }, 200);
     }
   }
 
@@ -128,6 +137,8 @@ class PhotoSwipeDynamicCaption {
     if (this.isCaptionHidden) {
       this.isCaptionHidden = false;
       this.captionElement.classList.remove('pswp__dynamic-caption--faded');
+      this.captionElement.style.visibility = 'visible';
+      clearTimeout(this.captionFadeTimeout);
     }
   }
 
