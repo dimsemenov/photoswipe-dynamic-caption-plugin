@@ -353,6 +353,9 @@ class PhotoSwipeDynamicCaption {
     const captionHTML = this.getCaptionHTML(pswp.currSlide);
     this.captionElement.style.visibility = captionHTML ? 'visible' :  'hidden';
     this.captionElement.innerHTML = captionHTML || '';
+    this.pswp.dispatch('dynamicCaptionUpdateHTML', { 
+      captionElement: this.captionElement
+    });
   }
 }
 
