@@ -129,16 +129,20 @@ class PhotoSwipeDynamicCaption {
       this.captionFadeTimeout = setTimeout(() => {
         this.captionElement.style.visibility = 'hidden';
         this.captionFadeTimeout = null;
-      }, 200);
+      }, 400);
     }
   }
 
   showCaption() {
     if (this.isCaptionHidden) {
       this.isCaptionHidden = false;
-      this.captionElement.classList.remove('pswp__dynamic-caption--faded');
       this.captionElement.style.visibility = 'visible';
+      
       clearTimeout(this.captionFadeTimeout);
+      this.captionFadeTimeout = setTimeout(() => {
+        this.captionElement.classList.remove('pswp__dynamic-caption--faded');
+        this.captionFadeTimeout = null;
+      }, 50);
     }
   }
 
