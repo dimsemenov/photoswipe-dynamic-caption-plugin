@@ -82,6 +82,8 @@
         </a>
         <div class="pswp-caption-content">
           <b>Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. (2008)</b><br>quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem, ut libero venenatis faucibus.
+
+          <b>Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. (2008)</b><br>quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem, ut libero venenatis faucibus.
         </div>
       </div>
       
@@ -183,23 +185,27 @@
       import PhotoSwipeLightbox from './lib/photoswipe/photoswipe-lightbox.esm.js';
       import PhotoSwipeDynamicCaption from './photoswipe-dynamic-caption-plugin.esm.js';
       
+      const smallScreenPadding = {
+        top: 0, bottom: 0, left: 0, right: 0
+      };
+      const largeScreenPadding = {
+        top: 30, bottom: 30, left: 70, right: 70
+      };
       const lightbox = new PhotoSwipeLightbox({
         gallerySelector: '#gallery',
         childSelector: '.pswp-gallery__item',
         
-        paddingTop: 30,
-        paddingBottom: 30,
-        paddingLeft: 70,
-        paddingRight: 70,
+        // optionaly adjust viewport
+        paddingFn: (viewportSize) => {
+          return viewportSize.x < 700 ? smallScreenPadding : largeScreenPadding
+        },
     
         pswpModule: './photoswipe.esm.js'
       });
 
       const captionPlugin = new PhotoSwipeDynamicCaption(lightbox, {
-        // type: 'below',
-        // captionContent: (slide) => {
-        //   return slide.data.element.querySelector('img').getAttribute('src');
-        // }
+        mobileLayoutBreakpoint: 700,
+        type: 'auto'
       });
 
       lightbox.init();
