@@ -1,3 +1,5 @@
+todo: need dynamic padding adjustment, maybe from photoswipe core?
+
 ## Dynamic caption plugin for [PhotoSwipe](https://photoswipe.com/) v5
 
 **[> Plugin demo <](https://dimsemenov.github.io/photoswipe-dynamic-caption-plugin/)**
@@ -76,7 +78,17 @@ mobileLayoutBreakpoint: (pswp, captionPlugin) => {
 #### `disableImagePaddingOnMobile: true`
 
 Automatically disable PhotoSwipe JS option paddingTop/Left/Right/Bottom when mobile layout is used.
-  
+
+
+#### `horizontalEdgeThreshold: 20`
+
+When caption `x` position is less than this value, it'll get class `pswp__dynamic-caption--on-hor-edge`. You may use it to apply different styling, such as horizontal padding.
+
+
+#### `mobileCaptionOverlapRatio: 0.3`
+
+A ratio defines the amount of horizontal empty space before the mobile caption switches to "overlap" layout. For example, if it's set to 0.3 - the caption will start overlapping the image when more than 30% of horizontal space is not occupied by an image. If you set it to 0 - the caption will always overlap. If you set it to 1 - the caption will always shift the image (unless it's taller than viewport).
+
 
 ### Styling
 
@@ -124,3 +136,15 @@ Feel free to adjust it in the plugin CSS file (and use media queries if you need
   - Check if caption will fit on the right side without any adjustments of image position.
     - If it does - just show the caption aside of the image.
     - If it doesn't - reduce pan area width by the width of caption.
+
+
+    ## Changelog
+
+
+    ### 1.1.0
+
+    - No longer adjusts main image padding. If you need to dynamically change padding based on the screen size - use PhotoSwipe option `paddingFn` (introduced in 5.1.61)
+    - Caption receives class `pswp__dynamic-caption--on-hor-edge` when it's on horizontal edge (`x` position is less than threshold). Added option `horizontalEdgeThreshold` to control this.
+    - Reworked mobile layout. Now the caption tries to not overlap the main image if there is an empty space below. Added option `mobileCaptionOverlapRatio` to control this.
+
+

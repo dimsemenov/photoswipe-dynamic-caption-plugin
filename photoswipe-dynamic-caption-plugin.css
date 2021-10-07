@@ -32,6 +32,11 @@
   padding: 15px 0 0;
 }
 
+.pswp__dynamic-caption--on-hor-edge {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
 .pswp__dynamic-caption--mobile {
   width: 100%;
   top: auto;

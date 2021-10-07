@@ -1,10 +1,17 @@
+/**
+ * PhotoSwipe Dynamic Caption plugin v1.1.0
+ * https://github.com/dimsemenov/photoswipe-dynamic-caption-plugin
+ * 
+ * By https://dimsemenov.com
+ */
+
 const defaultOptions = {
   captionContent: '.pswp-caption-content',
   type: 'auto',
+  horizontalEdgeThreshold: 20,
+  mobileCaptionOverlapRatio: 0.3,
   mobileLayoutBreakpoint: 600,
-  disableImagePaddingOnMobile: true
 };
-
 
 class PhotoSwipeDynamicCaption {
   constructor(lightbox, options) {
@@ -25,18 +32,6 @@ class PhotoSwipeDynamicCaption {
     this.isCaptionHidden = false;
     this.tempCaption = false;
     this.captionElement = false;
-
-    // store initial padding that's defined during initialization
-    this.initialPadding = {
-      left: this.pswp.options.paddingLeft,
-      bottom: this.pswp.options.paddingBottom,
-      top: this.pswp.options.paddingTop,
-      right: this.pswp.options.paddingRight
-    };
-
-    if (this.useMobileLayout()) {
-      this.disableSlidePadding();
-    }
 
     this.pswp.on('uiRegister', () => {
       this.pswp.ui.registerElement({
@@ -147,6 +142,11 @@ class PhotoSwipeDynamicCaption {
   }
 
   setCaptionPosition(x, y) {
+    const isOnHorizontalEdge = (x <= this.options.horizontalEdgeThreshold);
+    this.captionElement.classList[
+      isOnHorizontalEdge ? 'add' : 'remove'
+    ]('pswp__dynamic-caption--on-hor-edge');
+
     this.captionElement.style.left = x + 'px';
     this.captionElement.style.top = y + 'px';
   }
@@ -221,19 +221,19 @@ class PhotoSwipeDynamicCaption {
     const { slide } = e;
 
     const captionHTML = this.getCaptionHTML(e.slide);
+    let useMobileVersion = false;
 
     if (!captionHTML) {
       slide.dynamicCaptionType = false;
       return;
     }
 
+    slide.bounds.update(slide.zoomLevels.initial);
+    
     if (this.useMobileLayout()) {
-      this.disableSlidePadding();
       slide.dynamicCaptionType = 'mobile';
+      useMobileVersion = true;
     } else {
-      this.enableSlidePadding();
-      slide.bounds.update(slide.zoomLevels.initial);
-
       if (this.options.type === 'auto') {
         if (slide.bounds.center.x > slide.bounds.center.y) {
           slide.dynamicCaptionType = 'aside';
@@ -255,6 +255,7 @@ class PhotoSwipeDynamicCaption {
     this.setCaptionType(this.tempCaption, slide.dynamicCaptionType);
 
     if (slide.dynamicCaptionType === 'aside') {
+      console.log('aside', useMobileVersion);
       this.tempCaption.innerHTML = this.getCaptionHTML(e.slide);
       this.setCaptionWidth(this.tempCaption, false);
       const captionWidth = this.tempCaption.getBoundingClientRect().width;
@@ -264,13 +265,16 @@ class PhotoSwipeDynamicCaption {
 
       if (horizontalLeftover <= captionWidth) {
         slide.panAreaSize.x -= captionWidth;
-        slide.zoomLevels.update(slide.width, slide.height, slide.panAreaSize);
-        slide.bounds.update(slide.zoomLevels.initial);
+        this.recalculateZoomLevelAndBounds(slide);
       } else {
         // do nothing, caption will fit aside without any adjustments
       }
-    } else if (slide.dynamicCaptionType === 'below') {
-      this.setCaptionWidth(this.tempCaption, imageWidth);
+    } else if (slide.dynamicCaptionType === 'below' || useMobileVersion) {
+      this.setCaptionWidth(
+        this.tempCaption, 
+        useMobileVersion ? this.pswp.viewportSize.x : imageWidth
+      );
+
       this.tempCaption.innerHTML = this.getCaptionHTML(e.slide);
       const captionHeight = this.tempCaption.getBoundingClientRect().height;
 
@@ -279,18 +283,37 @@ class PhotoSwipeDynamicCaption {
       const verticalEnding = imageHeight + slide.bounds.center.y;
 
       // height between bottom of the screen and ending of the image
-      // (before any adjustments applied)
+      // (before any adjustments applied) 
       const verticalLeftover = slide.panAreaSize.y - verticalEnding;
+      const initialPanAreaHeight = slide.panAreaSize.y;
 
-      if (verticalLeftover <= captionHeight) {
+      if (useMobileVersion || verticalLeftover <= captionHeight) {
         // lift up the image to give more space for caption
         slide.panAreaSize.y -= captionHeight;
         // we reduce viewport size, thus we need to update zoom level and pan bounds
-        slide.zoomLevels.update(slide.width, slide.height, slide.panAreaSize);
-        slide.bounds.update(slide.zoomLevels.initial);
-      } else {
-        // do nothing, caption will fit below the image without any adjustments
+        this.recalculateZoomLevelAndBounds(slide);
+
+        const maxPositionX = slide.panAreaSize.x * this.options.mobileCaptionOverlapRatio / 2;
+        console.log(maxPositionX, this.options.mobileCaptionOverlapRatio);
+
+        // Do not reduce viewport height if too few space available
+        if (useMobileVersion 
+            && slide.bounds.center.x > maxPositionX) {
+          // Restore the default position
+          slide.panAreaSize.y = initialPanAreaHeight;
+          this.recalculateZoomLevelAndBounds(slide);
+        }
       }
+
+      
+      
+      // if (this.useMobileLayout && slide.bounds.center.x > 100) {
+      //   // do nothing, caption will overlap the bottom part of the image
+      // } else if (verticalLeftover <= captionHeight) {
+        
+      // } else {
+      //   // do nothing, caption will fit below the image without any adjustments
+      // }
     } else {
       // mobile
     }
@@ -302,32 +325,17 @@ class PhotoSwipeDynamicCaption {
     }
   }
 
+  recalculateZoomLevelAndBounds(slide) {
+    slide.zoomLevels.update(slide.width, slide.height, slide.panAreaSize);
+    slide.bounds.update(slide.zoomLevels.initial);
+  }
+
   storePanAreaSize(slide) {
     if (!slide.dynamicCaptionPanAreaSize) {
       slide.dynamicCaptionPanAreaSize = {};
     }
     slide.dynamicCaptionPanAreaSize.x = slide.panAreaSize.x;
     slide.dynamicCaptionPanAreaSize.y = slide.panAreaSize.y;
-  }
-
-  enableSlidePadding() {
-    if (this.options.disableImagePaddingOnMobile) {
-      const pswpOptions = this.pswp.options;
-      pswpOptions.paddingLeft = this.initialPadding.left;
-      pswpOptions.paddingRight = this.initialPadding.right;
-      pswpOptions.paddingTop = this.initialPadding.top;
-      pswpOptions.paddingBottom = this.initialPadding.bottom;
-    }
-  }
-
-  disableSlidePadding() {
-    if (this.options.disableImagePaddingOnMobile) {
-      const pswpOptions = this.pswp.options;
-      pswpOptions.paddingLeft = 0;
-      pswpOptions.paddingRight = 0;
-      pswpOptions.paddingTop = 0;
-      pswpOptions.paddingBottom = 0;
-    }
   }
 
   getCaptionHTML(slide) {
