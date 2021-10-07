@@ -1,5 +1,3 @@
-todo: need dynamic padding adjustment, maybe from photoswipe core?
-
 ## Dynamic caption plugin for [PhotoSwipe](https://photoswipe.com/) v5
 
 **[> Plugin demo <](https://dimsemenov.github.io/photoswipe-dynamic-caption-plugin/)**
