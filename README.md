@@ -93,7 +93,9 @@ It can be in one of these states:
 - Right side of the main image - `pswp__dynamic-caption--aside`.
 - "Mobile" (by default just pinned to bottom) - `pswp__dynamic-caption--mobile`
 
-Feel free to adjust it in the plugin CSS file (and use media queries if you need):
+If the caption is near left horizontal edge - it gets class `pswp__dynamic-caption--on-hor-edge`.
+
+Feel free to adjust styles in the plugin CSS file (and use media queries if you need):
 
 ```css
 .pswp__dynamic-caption--aside {
@@ -129,14 +131,15 @@ Feel free to adjust it in the plugin CSS file (and use media queries if you need
   - Check if caption will fit on the right side without any adjustments of image position.
     - If it does - just show the caption aside of the image.
     - If it doesn't - reduce pan area width by the width of caption.
-- If `mobileLayoutBreakpoint` requirements are met:
+
+If `mobileLayoutBreakpoint` requirements are met:
+
   - Measure caption height when it occupies 100% width.
   - Reduce pan area height to fit the caption below the image.
   - Check amount of free horizontal space after the adjustment.
   - If there is too much horizontal space (`mobileCaptionOverlapRatio`) - just overlap the caption and keep the image at the default position.
 
 ## Changelog
-
 
 ### 1.1.0
 
