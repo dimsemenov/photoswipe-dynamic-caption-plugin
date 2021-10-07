@@ -134,15 +134,19 @@ Feel free to adjust it in the plugin CSS file (and use media queries if you need
   - Check if caption will fit on the right side without any adjustments of image position.
     - If it does - just show the caption aside of the image.
     - If it doesn't - reduce pan area width by the width of caption.
+- If `mobileLayoutBreakpoint` requirements are met:
+  - Measure caption height when it occupies 100% width.
+  - Reduce pan area height to fit the caption below the image.
+  - Check amount of free horizontal space after the adjustment.
+  - If there is too much horizontal space (`mobileCaptionOverlapRatio`) - just overlap the caption and keep the image at the default position.
+
+## Changelog
 
 
-    ## Changelog
+### 1.1.0
 
-
-    ### 1.1.0
-
-    - No longer adjusts main image padding. If you need to dynamically change padding based on the screen size - use PhotoSwipe option `paddingFn` (introduced in 5.1.61)
-    - Caption receives class `pswp__dynamic-caption--on-hor-edge` when it's on horizontal edge (`x` position is less than threshold). Added option `horizontalEdgeThreshold` to control this.
-    - Reworked mobile layout. Now the caption tries to not overlap the main image if there is an empty space below. Added option `mobileCaptionOverlapRatio` to control this.
+- No longer adjusts main image padding. If you need to dynamically change padding based on the screen size - use PhotoSwipe option `paddingFn` (introduced in 5.1.61)
+- Caption receives class `pswp__dynamic-caption--on-hor-edge` when it's on horizontal edge (`x` position is less than threshold). Added option `horizontalEdgeThreshold` to control this.
+- Reworked mobile layout. Now the caption tries to not overlap the main image if there is an empty space below. Added option `mobileCaptionOverlapRatio` to control this.
 
 
