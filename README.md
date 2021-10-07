@@ -73,11 +73,6 @@ mobileLayoutBreakpoint: (pswp, captionPlugin) => {
 }
 ```
 
-#### `disableImagePaddingOnMobile: true`
-
-Automatically disable PhotoSwipe JS option paddingTop/Left/Right/Bottom when mobile layout is used.
-
-
 #### `horizontalEdgeThreshold: 20`
 
 When caption `x` position is less than this value, it'll get class `pswp__dynamic-caption--on-hor-edge`. You may use it to apply different styling, such as horizontal padding.
