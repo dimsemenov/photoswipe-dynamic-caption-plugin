@@ -84,15 +84,14 @@ class PhotoSwipeDynamicCaption {
     pswp.on('beforeZoomTo', (e) => {
       const { currSlide } = pswp;
 
-      if (currSlide.dynamicCaptionPanAreaSize) {
+      if (currSlide.__dcAdjustedPanAreaSize) {
         if (e.destZoomLevel > currSlide.zoomLevels.initial) {
-          // Disable panAreaSize override right before we're zooming in
-          currSlide.panAreaSize.x = pswp.viewportSize.x - (pswp.options.paddingLeft || 0) - (pswp.options.paddingRight || 0),
-          currSlide.panAreaSize.y = pswp.viewportSize.y - (pswp.options.paddingTop || 0) - (pswp.options.paddingBottom || 0);
+          currSlide.panAreaSize.x = currSlide.__dcOriginalPanAreaSize.x;
+          currSlide.panAreaSize.y = currSlide.__dcOriginalPanAreaSize.y;
         } else {
           // Restore panAreaSize after we zoom back to initial position
-          currSlide.panAreaSize.x = currSlide.dynamicCaptionPanAreaSize.x;
-          currSlide.panAreaSize.y = currSlide.dynamicCaptionPanAreaSize.y;
+          currSlide.panAreaSize.x = currSlide.__dcAdjustedPanAreaSize.x;
+          currSlide.panAreaSize.y = currSlide.__dcAdjustedPanAreaSize.y;
         }
       }
     });
@@ -222,11 +221,14 @@ class PhotoSwipeDynamicCaption {
 
     const captionHTML = this.getCaptionHTML(e.slide);
     let useMobileVersion = false;
+    let captionSize;
 
     if (!captionHTML) {
       slide.dynamicCaptionType = false;
       return;
     }
+
+    this.storeOriginalPanAreaSize(slide);
 
     slide.bounds.update(slide.zoomLevels.initial);
     
@@ -255,10 +257,10 @@ class PhotoSwipeDynamicCaption {
     this.setCaptionType(this.tempCaption, slide.dynamicCaptionType);
 
     if (slide.dynamicCaptionType === 'aside') {
-      console.log('aside', useMobileVersion);
       this.tempCaption.innerHTML = this.getCaptionHTML(e.slide);
       this.setCaptionWidth(this.tempCaption, false);
-      const captionWidth = this.tempCaption.getBoundingClientRect().width;
+      captionSize = this.measureCaptionSize(this.tempCaption, e.slide);
+      const captionWidth = captionSize.x;      
 
       const horizontalEnding = imageWidth + slide.bounds.center.x;
       const horizontalLeftover = (slide.panAreaSize.x - horizontalEnding);
@@ -274,9 +276,9 @@ class PhotoSwipeDynamicCaption {
         this.tempCaption, 
         useMobileVersion ? this.pswp.viewportSize.x : imageWidth
       );
-
       this.tempCaption.innerHTML = this.getCaptionHTML(e.slide);
-      const captionHeight = this.tempCaption.getBoundingClientRect().height;
+      captionSize = this.measureCaptionSize(this.tempCaption, e.slide);
+      const captionHeight = captionSize.y;
 
 
       // vertical ending of the image
@@ -287,14 +289,14 @@ class PhotoSwipeDynamicCaption {
       const verticalLeftover = slide.panAreaSize.y - verticalEnding;
       const initialPanAreaHeight = slide.panAreaSize.y;
 
-      if (useMobileVersion || verticalLeftover <= captionHeight) {
+      if (verticalLeftover <= captionHeight) {
         // lift up the image to give more space for caption
-        slide.panAreaSize.y -= captionHeight;
+        slide.panAreaSize.y -= Math.min((captionHeight - verticalLeftover) * 2, captionHeight);
+
         // we reduce viewport size, thus we need to update zoom level and pan bounds
         this.recalculateZoomLevelAndBounds(slide);
 
         const maxPositionX = slide.panAreaSize.x * this.options.mobileCaptionOverlapRatio / 2;
-        console.log(maxPositionX, this.options.mobileCaptionOverlapRatio);
 
         // Do not reduce viewport height if too few space available
         if (useMobileVersion 
@@ -318,11 +320,24 @@ class PhotoSwipeDynamicCaption {
       // mobile
     }
 
-    this.storePanAreaSize(slide);
+    this.storeAdjustedPanAreaSize(slide);
 
     if (slide === this.pswp.currSlide) {
       this.updateCurrentCaptionPosition();
     }
+  }
+
+  measureCaptionSize(captionEl, slide) {
+    const rect = captionEl.getBoundingClientRect();
+    const event = this.pswp.dispatch('dynamicCaptionMeasureSize', {
+      captionEl,
+      slide,
+      captionSize: {
+        x: rect.width,
+        y: rect.height
+      }
+    });
+    return event.captionSize;
   }
 
   recalculateZoomLevelAndBounds(slide) {
@@ -330,12 +345,20 @@ class PhotoSwipeDynamicCaption {
     slide.bounds.update(slide.zoomLevels.initial);
   }
 
-  storePanAreaSize(slide) {
-    if (!slide.dynamicCaptionPanAreaSize) {
-      slide.dynamicCaptionPanAreaSize = {};
+  storeAdjustedPanAreaSize(slide) {
+    if (!slide.__dcAdjustedPanAreaSize) {
+      slide.__dcAdjustedPanAreaSize = {};
     }
-    slide.dynamicCaptionPanAreaSize.x = slide.panAreaSize.x;
-    slide.dynamicCaptionPanAreaSize.y = slide.panAreaSize.y;
+    slide.__dcAdjustedPanAreaSize.x = slide.panAreaSize.x;
+    slide.__dcAdjustedPanAreaSize.y = slide.panAreaSize.y;
+  }
+
+  storeOriginalPanAreaSize(slide) {
+    if (!slide.__dcOriginalPanAreaSize) {
+      slide.__dcOriginalPanAreaSize = {};
+    }
+    slide.__dcOriginalPanAreaSize.x = slide.panAreaSize.x;
+    slide.__dcOriginalPanAreaSize.y = slide.panAreaSize.y;
   }
 
   getCaptionHTML(slide) {
