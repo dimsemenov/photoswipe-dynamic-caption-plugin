@@ -49,8 +49,6 @@ lightbox.init();
 <link rel="stylesheet" href="https://unpkg.com/photoswipe-dynamic-caption-plugin/photoswipe-dynamic-caption-plugin.css">
 ```
 
-https://unpkg.com/photoswipe-dynamic-caption-plugin/photoswipe-dynamic-caption-plugin.css
-
 Also refer the source of the demo page - [index.html](https://github.com/dimsemenov/photoswipe-dynamic-caption-plugin/blob/main/index.html).
 
 ### Plugin options
