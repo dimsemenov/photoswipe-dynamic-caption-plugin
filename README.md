@@ -9,7 +9,7 @@ For accessibility, make sure that important captions are always available withou
 
 ### Intiailization
 
-The plugin has a single JS file `photoswipe-dynamic-caption-plugin.esm.js` and a single CSS file `photoswipe-dynamic-caption-plugin.css`. Or include with npm:
+The plugin has a single JS file `photoswipe-dynamic-caption-plugin.esm.js` and a single CSS file `photoswipe-dynamic-caption-plugin.css`. Include them directly or via with npm:
 
 ```
 npm i photoswipe-dynamic-caption-plugin --save
@@ -21,7 +21,7 @@ It can be initialized like this:
 <script type="module">
 import PhotoSwipeLightbox from 'photoswipe/dist/photoswipe-lightbox.esm.js';
 // or 'photoswipe-dynamic-caption-plugin' if using package manager
-import PhotoSwipeDynamicCaption from './photoswipe-dynamic-caption-plugin.esm.js';
+import PhotoSwipeDynamicCaption from 'https://unpkg.com/photoswipe-dynamic-caption-plugin/photoswipe-dynamic-caption-plugin.esm.js';
 
 const lightbox = new PhotoSwipeLightbox({
   gallerySelector: '#gallery',
@@ -45,13 +45,28 @@ lightbox.init();
 </script>
 ```
 
+```html
+<link rel="stylesheet" href="https://unpkg.com/photoswipe-dynamic-caption-plugin/photoswipe-dynamic-caption-plugin.css">
+```
+
+https://unpkg.com/photoswipe-dynamic-caption-plugin/photoswipe-dynamic-caption-plugin.css
+
 Also refer the source of the demo page - [index.html](https://github.com/dimsemenov/photoswipe-dynamic-caption-plugin/blob/main/index.html).
 
 ### Plugin options
 
 #### `captionContent: '.pswp-caption-content'`
 
-Element class from which caption content will be retrieved, if element is not found - the plugin will try to use thumbnail image `alt` attribute.
+Used to retrieve caption content.
+
+Can be a selector of the element from which caption content will be retrieved, if the element is not found - the plugin will try to use the thumbnail image `alt` attribute.
+
+```html
+<a href="path/to/large-image.jpg" data-pswp-width="1024" data-pswp-height="768">
+  <img src="path/to/thumbnail.jpg" alt="" />
+  <span class="pswp-caption-content">Caption content</span>
+</a>
+```
 
 Or a function that should return caption content. For example:
  
@@ -114,7 +129,7 @@ Feel free to adjust styles in the plugin CSS file (and use media queries if you 
   padding: 15px 0 0;
 }
 .pswp__dynamic-caption--mobile {
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   padding: 10px 15px;
 }
 ```
