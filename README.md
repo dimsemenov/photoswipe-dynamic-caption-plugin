@@ -2,26 +2,32 @@
 
 **[> Plugin demo <](https://dimsemenov.github.io/photoswipe-dynamic-caption-plugin/)**
 
+
 The plugin can automatically position the text below or aside depending on the available space. For small to medium sized captions. And only for images with the default `fit` scale mode.
 
 For accessibility, make sure that important captions are always available without PhotoSwipe  - either use an `alt` attribute on thumbnails or `aria-labelledby`.
 
 ### Intiailization
 
-The plugin has a single JS file `photoswipe-dynamic-caption-plugin.esm.js` and a single CSS file `photoswipe-dynamic-caption-plugin.css`.
+The plugin has a single JS file `photoswipe-dynamic-caption-plugin.esm.js` and a single CSS file `photoswipe-dynamic-caption-plugin.css`. Or include with npm:
+
+```
+npm i photoswipe-dynamic-caption-plugin --save
+```
 
 It can be initialized like this:
 
 ```html
 <script type="module">
-import PhotoSwipeLightbox from '/lib/photoswipe/photoswipe-lightbox.esm.js';
+import PhotoSwipeLightbox from 'photoswipe/dist/photoswipe-lightbox.esm.js';
+// or 'photoswipe-dynamic-caption-plugin' if using package manager
 import PhotoSwipeDynamicCaption from './photoswipe-dynamic-caption-plugin.esm.js';
 
 const lightbox = new PhotoSwipeLightbox({
   gallerySelector: '#gallery',
   childSelector: '.pswp-gallery__item',
-  pswpModule: () => import('/lib/photoswipe/photoswipe.esm.js'),
-   
+  pswpModule: () => import('photoswipe/dist/photoswipe.esm.js'),
+
   // Optional padding for images
   paddingTop: 30,
   paddingBottom: 30,
