@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width"/>
-    <link rel="stylesheet" href="./lib/photoswipe/photoswipe.css">
+    <link rel="stylesheet" href="https://unpkg.com/photoswipe@5.2.0-beta.2/dist/photoswipe.css">
     <link rel="stylesheet" href="./photoswipe-dynamic-caption-plugin.css">
 
     <!-- demo styles, ignore em-->
@@ -180,9 +180,9 @@
     </div>
 
     <script type="module">
-      import PhotoSwipeLightbox from './lib/photoswipe/photoswipe-lightbox.esm.js';
+      import PhotoSwipeLightbox from 'https://unpkg.com/photoswipe@5.2.0-beta.2/dist/photoswipe-lightbox.esm.js';
       import PhotoSwipeDynamicCaption from './photoswipe-dynamic-caption-plugin.esm.js';
-      
+
       const smallScreenPadding = {
         top: 0, bottom: 0, left: 0, right: 0
       };
@@ -197,13 +197,15 @@
         paddingFn: (viewportSize) => {
           return viewportSize.x < 700 ? smallScreenPadding : largeScreenPadding
         },
+       
     
-        pswpModule: './photoswipe.esm.js'
+        pswpModule: () => import('https://unpkg.com/photoswipe@5.2.0-beta.2/dist/photoswipe.esm.js')
       });
 
       const captionPlugin = new PhotoSwipeDynamicCaption(lightbox, {
         mobileLayoutBreakpoint: 700,
-        type: 'auto'
+        type: 'auto',
+        mobileCaptionOverlapRatio: 1
       });
 
       lightbox.init();

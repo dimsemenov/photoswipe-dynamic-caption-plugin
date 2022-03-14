@@ -14,13 +14,13 @@ It can be initialized like this:
 
 ```html
 <script type="module">
-import PhotoSwipeLightbox from './lib/photoswipe/photoswipe-lightbox.esm.js';
+import PhotoSwipeLightbox from '/lib/photoswipe/photoswipe-lightbox.esm.js';
 import PhotoSwipeDynamicCaption from './photoswipe-dynamic-caption-plugin.esm.js';
 
 const lightbox = new PhotoSwipeLightbox({
   gallerySelector: '#gallery',
   childSelector: '.pswp-gallery__item',
-  pswpModule: './photoswipe.esm.js',
+  pswpModule: () => import('/lib/photoswipe/photoswipe.esm.js'),
    
   // Optional padding for images
   paddingTop: 30,
