@@ -213,7 +213,10 @@ class PhotoSwipeDynamicCaption {
     this.tempCaption.className = 'pswp__dynamic-caption pswp__dynamic-caption--temp';
     this.tempCaption.style.visibility = 'hidden';
     this.tempCaption.setAttribute('aria-hidden', 'true');
-    this.pswp.template.appendChild(this.tempCaption);
+    // move caption element, so it's after BG,
+    // so that other controls can freely overlap it
+    this.pswp.bg.after(this.captionElement); 
+    this.captionElement.after(this.tempCaption);
   }
 
   onCalcSlideSize(e) {
