@@ -28,11 +28,13 @@ const lightbox = new PhotoSwipeLightbox({
   childSelector: '.pswp-gallery__item',
   pswpModule: () => import('photoswipe/dist/photoswipe.esm.js'),
 
-  // Optional padding for images
-  paddingTop: 30,
-  paddingBottom: 30,
-  paddingLeft: 70,
-  paddingRight: 70
+  // Optional padding for images,
+  // note that this is an option of PhotoSwipe, not a plugin
+  paddingFn: (viewportSize) => {
+    return {
+      top: 30, bottom: 30, left: 70, right: 70
+    }
+  },
 });
 
 const captionPlugin = new PhotoSwipeDynamicCaption(lightbox, {
