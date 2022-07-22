@@ -164,6 +164,7 @@ If `mobileLayoutBreakpoint` requirements are met:
 
 ### 1.2.0
 
+- Requires PhotoSwipe 5.3.0.
 - Caption now moves with the slide when dragged (instead of fading in and out).
 - Each slide now has a separate DOM element (before there was only a single caption element that changed content).
 - No longer uses temporary caption to measure size.
