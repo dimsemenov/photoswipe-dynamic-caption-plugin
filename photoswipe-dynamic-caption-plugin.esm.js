@@ -1,5 +1,5 @@
 /**
- * PhotoSwipe Dynamic Caption plugin v1.2.0
+ * PhotoSwipe Dynamic Caption plugin v1.2.1
  * https://github.com/dimsemenov/photoswipe-dynamic-caption-plugin
  * 
  * By https://dimsemenov.com
@@ -172,7 +172,7 @@ class PhotoSwipeDynamicCaption {
   }
 
   updateCaptionPosition(slide) {
-    if (!slide.dynamicCaption || !slide.dynamicCaption.type) {
+    if (!slide.dynamicCaption || !slide.dynamicCaption.type || !slide.dynamicCaption.element) {
       return;
     }
 
@@ -238,6 +238,10 @@ class PhotoSwipeDynamicCaption {
       });
 
       slide.holderElement.appendChild(slide.dynamicCaption.element);
+    }
+
+    if (!slide.dynamicCaption.element) {
+      return;
     }
 
     this.storeOriginalPanAreaSize(slide);
