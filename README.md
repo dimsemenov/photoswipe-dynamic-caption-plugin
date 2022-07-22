@@ -162,6 +162,14 @@ If `mobileLayoutBreakpoint` requirements are met:
 
 ## Changelog
 
+### 1.2.0
+
+- Caption now moves with the slide when dragged (instead of fading in and out).
+- Each slide now has a separate DOM element (before there was only a single caption element that changed content).
+- No longer uses temporary caption to measure size.
+- You may now access caption and its data via `dynamicCaption` property of a slide. For example `pswp.currSlide.dynamicCaption`.
+
+
 ### 1.1.0
 
 - No longer adjusts main image padding. If you need to dynamically change padding based on the screen size - use PhotoSwipe option `paddingFn` (introduced in 5.1.61)
