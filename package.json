@@ -5,6 +5,9 @@
   "main": "photoswipe-dynamic-caption-plugin.esm.js",
 	"style": "photoswipe-dynamic-caption-plugin.css",
   "type": "module",
+  "exports": {
+    ".": "./photoswipe-dynamic-caption-plugin.esm.js"
+  },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
