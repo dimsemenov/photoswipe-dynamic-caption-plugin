@@ -1,5 +1,5 @@
 /**
- * PhotoSwipe Dynamic Caption plugin v1.2.1
+ * PhotoSwipe Dynamic Caption plugin v1.2.2
  * https://github.com/dimsemenov/photoswipe-dynamic-caption-plugin
  * 
  * By https://dimsemenov.com
@@ -115,7 +115,7 @@ class PhotoSwipeDynamicCaption {
       if (!captionElement) {
         return;
       }
-      
+
       slide.dynamicCaption.hidden = true;
       captionElement.classList.add('pswp__dynamic-caption--faded');
 
