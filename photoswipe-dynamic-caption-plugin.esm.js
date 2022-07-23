@@ -111,6 +111,11 @@ class PhotoSwipeDynamicCaption {
   hideCaption(slide) {
     if (slide.dynamicCaption && !slide.dynamicCaption.hidden) {
       const captionElement = slide.dynamicCaption.element;
+
+      if (!captionElement) {
+        return;
+      }
+      
       slide.dynamicCaption.hidden = true;
       captionElement.classList.add('pswp__dynamic-caption--faded');
 
@@ -132,6 +137,10 @@ class PhotoSwipeDynamicCaption {
   showCaption(slide) {
     if (slide.dynamicCaption && slide.dynamicCaption.hidden) {
       const captionElement = slide.dynamicCaption.element;
+
+      if (!captionElement) {
+        return;
+      }
 
       slide.dynamicCaption.hidden = false;
       captionElement.style.visibility = 'visible';
