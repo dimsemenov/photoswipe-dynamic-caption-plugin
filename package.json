@@ -6,7 +6,8 @@
   "style": "photoswipe-dynamic-caption-plugin.css",
   "type": "module",
   "exports": {
-    ".": "./photoswipe-dynamic-caption-plugin.esm.js"
+    ".": "./photoswipe-dynamic-caption-plugin.esm.js",
+    "./photoswipe-dynamic-caption-plugin.css": "./photoswipe-dynamic-caption-plugin.css"
   },
   "devDependencies": {},
   "scripts": {
