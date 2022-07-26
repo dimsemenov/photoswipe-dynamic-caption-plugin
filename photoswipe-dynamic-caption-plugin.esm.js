@@ -1,5 +1,5 @@
 /**
- * PhotoSwipe Dynamic Caption plugin v1.2.2
+ * PhotoSwipe Dynamic Caption plugin v1.2.4
  * https://github.com/dimsemenov/photoswipe-dynamic-caption-plugin
  * 
  * By https://dimsemenov.com
