@@ -1,5 +1,5 @@
 /**
- * PhotoSwipe Dynamic Caption plugin v1.2.4
+ * PhotoSwipe Dynamic Caption plugin v1.2.5
  * https://github.com/dimsemenov/photoswipe-dynamic-caption-plugin
  * 
  * By https://dimsemenov.com
@@ -68,22 +68,13 @@ class PhotoSwipeDynamicCaption {
 
           this.setCaptionYOffset(slide.dynamicCaption.element, captionYOffset);
         }
+
+        this.adjustPanArea(slide, slide.currZoomLevel);
       }
     });
 
     pswp.on('beforeZoomTo', (e) => {
-      const { currSlide } = pswp;
-
-      if (currSlide.dynamicCaption && currSlide.dynamicCaption.adjustedPanAreaSize) {
-        if (e.destZoomLevel > currSlide.zoomLevels.initial) {
-          currSlide.panAreaSize.x = currSlide.dynamicCaption.originalPanAreaSize.x;
-          currSlide.panAreaSize.y = currSlide.dynamicCaption.originalPanAreaSize.y;
-        } else {
-          // Restore panAreaSize after we zoom back to initial position
-          currSlide.panAreaSize.x = currSlide.dynamicCaption.adjustedPanAreaSize.x;
-          currSlide.panAreaSize.y = currSlide.dynamicCaption.adjustedPanAreaSize.y;
-        }
-      }
+      this.adjustPanArea(pswp.currSlide, e.destZoomLevel);
     });
 
     // Stop default action of tap when tapping on the caption
@@ -92,6 +83,19 @@ class PhotoSwipeDynamicCaption {
         e.preventDefault();
       }
     });
+  }
+
+  adjustPanArea(slide, zoomLevel) {
+    if (slide.dynamicCaption && slide.dynamicCaption.adjustedPanAreaSize) {
+      if (zoomLevel > slide.zoomLevels.initial) {
+        slide.panAreaSize.x = slide.dynamicCaption.originalPanAreaSize.x;
+        slide.panAreaSize.y = slide.dynamicCaption.originalPanAreaSize.y;
+      } else {
+        // Restore panAreaSize after we zoom back to initial position
+        slide.panAreaSize.x = slide.dynamicCaption.adjustedPanAreaSize.x;
+        slide.panAreaSize.y = slide.dynamicCaption.adjustedPanAreaSize.y;
+      }
+    }
   }
 
   useMobileLayout() {
