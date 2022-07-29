@@ -1,5 +1,5 @@
 /**
- * PhotoSwipe Dynamic Caption plugin v1.2.5
+ * PhotoSwipe Dynamic Caption plugin v1.2.6
  * https://github.com/dimsemenov/photoswipe-dynamic-caption-plugin
  * 
  * By https://dimsemenov.com
@@ -11,6 +11,7 @@ const defaultOptions = {
   horizontalEdgeThreshold: 20,
   mobileCaptionOverlapRatio: 0.3,
   mobileLayoutBreakpoint: 600,
+  verticallyCenterImage: false
 };
 
 class PhotoSwipeDynamicCaption {
@@ -308,29 +309,36 @@ class PhotoSwipeDynamicCaption {
       captionSize = this.measureCaptionSize(slide.dynamicCaption.element, e.slide);
       const captionHeight = captionSize.y;
 
-      // vertical ending of the image
-      const verticalEnding = imageHeight + slide.bounds.center.y;
-
-      // height between bottom of the screen and ending of the image
-      // (before any adjustments applied) 
-      const verticalLeftover = slide.panAreaSize.y - verticalEnding;
-      const initialPanAreaHeight = slide.panAreaSize.y;
-
-      if (verticalLeftover <= captionHeight) {
-        // lift up the image to give more space for caption
-        slide.panAreaSize.y -= Math.min((captionHeight - verticalLeftover) * 2, captionHeight);
-
-        // we reduce viewport size, thus we need to update zoom level and pan bounds
+      if (this.options.verticallyCenterImage) {
+        slide.panAreaSize.y -= captionHeight;
         this.recalculateZoomLevelAndBounds(slide);
+      } else {
+        // Lift up the image only by caption height
 
-        const maxPositionX = slide.panAreaSize.x * this.options.mobileCaptionOverlapRatio / 2;
+        // vertical ending of the image
+        const verticalEnding = imageHeight + slide.bounds.center.y;
 
-        // Do not reduce viewport height if too few space available
-        if (useMobileVersion 
-            && slide.bounds.center.x > maxPositionX) {
-          // Restore the default position
-          slide.panAreaSize.y = initialPanAreaHeight;
+        // height between bottom of the screen and ending of the image
+        // (before any adjustments applied) 
+        const verticalLeftover = slide.panAreaSize.y - verticalEnding;
+        const initialPanAreaHeight = slide.panAreaSize.y;
+
+        if (verticalLeftover <= captionHeight) {
+          // lift up the image to give more space for caption
+          slide.panAreaSize.y -= Math.min((captionHeight - verticalLeftover) * 2, captionHeight);
+
+          // we reduce viewport size, thus we need to update zoom level and pan bounds
           this.recalculateZoomLevelAndBounds(slide);
+
+          const maxPositionX = slide.panAreaSize.x * this.options.mobileCaptionOverlapRatio / 2;
+
+          // Do not reduce viewport height if too few space available
+          if (useMobileVersion 
+              && slide.bounds.center.x > maxPositionX) {
+            // Restore the default position
+            slide.panAreaSize.y = initialPanAreaHeight;
+            this.recalculateZoomLevelAndBounds(slide);
+          }
         }
       }
     } else {

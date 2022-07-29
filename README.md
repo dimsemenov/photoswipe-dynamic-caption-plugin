@@ -104,6 +104,12 @@ When caption `x` position is less than this value, it'll get class `pswp__dynami
 A ratio defines the amount of horizontal empty space before the mobile caption switches to "overlap" layout. For example, if it's set to 0.3 - the caption will start overlapping the image when more than 30% of horizontal space is not occupied by an image. If you set it to 0 - the caption will always overlap. If you set it to 1 - the caption will always shift the image (unless it's taller than viewport).
 
 
+
+#### verticallyCenterImage: false
+
+If enabled, the image will always be vertically centered in the remaining space between caption and the rest of viewport.  If set to false (default value) - the image will lift up only if caption does not fit below.
+
+
 ### Styling
 
 The caption has class `pswp__dynamic-caption`.
