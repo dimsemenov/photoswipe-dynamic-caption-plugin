@@ -9,8 +9,16 @@
     ".": "./photoswipe-dynamic-caption-plugin.esm.js",
     "./photoswipe-dynamic-caption-plugin.css": "./photoswipe-dynamic-caption-plugin.css"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.18.0",
+    "@babel/eslint-parser": "^7.17.0",
+    "@babel/plugin-syntax-class-properties": "^7.12.13",
+    "rollup": "^2.46.0",
+    "rollup-plugin-copy": "^3.4.0",
+    "rollup-plugin-terser": "^7.0.2"
+  },
   "scripts": {
+    "build": "rollup --config rollup.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
