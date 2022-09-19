@@ -9,7 +9,7 @@ For accessibility, make sure that important captions are always available withou
 
 ### Intiailization
 
-The plugin has a single JS file `photoswipe-dynamic-caption-plugin.esm.js` and a single CSS file `photoswipe-dynamic-caption-plugin.css`. Include them directly or via with npm:
+The plugin has a single JS file `photoswipe-dynamic-caption-plugin.esm.js` (UMD version is in the `dist/` folder) and a single CSS file `photoswipe-dynamic-caption-plugin.css`. Include them directly or via with npm:
 
 ```
 npm i photoswipe-dynamic-caption-plugin --save
