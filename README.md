@@ -3,13 +3,13 @@
 **[> Plugin demo <](https://dimsemenov.github.io/photoswipe-dynamic-caption-plugin/)**
 
 
-The plugin can automatically position the text below or aside depending on the available space. For small to medium sized captions. And only for images with the default `fit` scale mode.
+The plugin can automatically position the text below or aside depending on the available space. For small to medium-sized captions. And only for images with the default `fit` scale mode.
 
 For accessibility, make sure that important captions are always available without PhotoSwipe  - either use an `alt` attribute on thumbnails or `aria-labelledby`.
 
-### Intiailization
+### Initialization
 
-The plugin has a single JS file `photoswipe-dynamic-caption-plugin.esm.js` (UMD version is in the `dist/` folder) and a single CSS file `photoswipe-dynamic-caption-plugin.css`. Include them directly or via with npm:
+The plugin has a single JS file `photoswipe-dynamic-caption-plugin.esm.js` (UMD version is in the `dist/` folder) and a single CSS file `photoswipe-dynamic-caption-plugin.css`. Include them directly or via npm:
 
 ```
 npm i photoswipe-dynamic-caption-plugin --save
@@ -78,10 +78,10 @@ captionContent: (slide) => {
 
 #### `type: 'auto'`
 
-Position type of the caption, can be 'auto', 'below', or 'aside'.
+Position type of the caption can be 'auto', 'below', or 'aside'.
 
-- 'below' - caption will always be place below the image
-- 'aside' - caption will always be placed to the right side of the image
+- 'below' - caption will always be placed below the image
+- 'aside' - caption will always be placed on the right side of the image
 - 'auto'  - the plugin will try to automatically determine the best position (depending on available space)
 
 #### `mobileLayoutBreakpoint: 600`
@@ -96,18 +96,18 @@ mobileLayoutBreakpoint: (pswp, captionPlugin) => {
 
 #### `horizontalEdgeThreshold: 20`
 
-When caption `x` position is less than this value, it'll get class `pswp__dynamic-caption--on-hor-edge`. You may use it to apply different styling, such as horizontal padding.
+When the caption `x` position is less than this value, it'll get class `pswp__dynamic-caption--on-hor-edge`. You may use it to apply different styling, such as horizontal padding.
 
 
 #### `mobileCaptionOverlapRatio: 0.3`
 
-A ratio defines the amount of horizontal empty space before the mobile caption switches to "overlap" layout. For example, if it's set to 0.3 - the caption will start overlapping the image when more than 30% of horizontal space is not occupied by an image. If you set it to 0 - the caption will always overlap. If you set it to 1 - the caption will always shift the image (unless it's taller than viewport).
+A ratio defines the amount of horizontal empty space before the mobile caption switches to an "overlap" layout. For example, if it's set to 0.3 - the caption will start overlapping the image when more than 30% of horizontal space is not occupied by an image. If you set it to 0 - the caption will always overlap. If you set it to 1 - the caption will constantly shift the image (unless it's taller than the viewport).
 
 
 
 #### verticallyCenterImage: false
 
-If enabled, the image will always be vertically centered in the remaining space between caption and the rest of viewport.  If set to false (default value) - the image will lift up only if caption does not fit below.
+If enabled, the image will always be vertically centered in the remaining space between the caption and the rest of the viewport.  If set to false (default value) - the image will lift up only if the caption does not fit below.
 
 
 ### Styling
@@ -120,9 +120,9 @@ It can be in one of these states:
 - Right side of the main image - `pswp__dynamic-caption--aside`.
 - "Mobile" (by default just pinned to bottom) - `pswp__dynamic-caption--mobile`
 
-If the caption is near left horizontal edge - it gets class `pswp__dynamic-caption--on-hor-edge`.
+If the caption is near the left horizontal edge - it gets class `pswp__dynamic-caption--on-hor-edge`.
 
-Feel free to adjust styles in the plugin CSS file (and use media queries if you need):
+Feel free to adjust styles in the plugin CSS file (and use media queries if you need to):
 
 ```css
 .pswp__dynamic-caption--aside {
@@ -147,23 +147,23 @@ Feel free to adjust styles in the plugin CSS file (and use media queries if you 
 - Check if there is more horizontal or vertical free space around the image.
 - If there is more free vertical space:
   - Set caption width to the width of the image 
-  - Add `pswp__dynamic-caption--below` class, so size can also be adjusted via CSS.
+  - Add `pswp__dynamic-caption--below` class, so the size can also be adjusted via CSS.
   - Measure caption height.
-  - Check if caption will fit without any adjustments of image position.
+  - Check if the caption will fit without any adjustments to the image position.
     - If it does - just show the caption below the image.
-    - If it doesn't - reduce pan area height by the height of caption.
+    - If it doesn't - reduce the pan area height by the height of the caption.
 - If there is more horizontal space:
-  - Add `pswp__dynamic-caption--aside` class, so size can be adjusted via CSS.
+  - Add `pswp__dynamic-caption--aside` class, so the size can be adjusted via CSS.
   - Measure caption width.
   - Check if caption will fit on the right side without any adjustments of image position.
-    - If it does - just show the caption aside of the image.
-    - If it doesn't - reduce pan area width by the width of caption.
+    - If it does - just show the caption aside from the image.
+    - If it doesn't - reduce the pan area width by the width of the caption.
 
 If `mobileLayoutBreakpoint` requirements are met:
 
-  - Measure caption height when it occupies 100% width.
+  - Measure caption height when it occupies 100% of width.
   - Reduce pan area height to fit the caption below the image.
-  - Check amount of free horizontal space after the adjustment.
+  - Check the amount of free horizontal space after the adjustment.
   - If there is too much horizontal space (`mobileCaptionOverlapRatio`) - just overlap the caption and keep the image at the default position.
 
 ## Changelog
