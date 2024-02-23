@@ -6,7 +6,10 @@
   "style": "photoswipe-dynamic-caption-plugin.css",
   "type": "module",
   "exports": {
-    ".": "./photoswipe-dynamic-caption-plugin.esm.js",
+    ".": {
+      "import": "./photoswipe-dynamic-caption-plugin.esm.js",
+      "types": "./photoswipe-dynamic-caption-plugin.d.mts"
+    },
     "./photoswipe-dynamic-caption-plugin.css": "./photoswipe-dynamic-caption-plugin.css"
   },
   "devDependencies": {
@@ -16,6 +19,9 @@
     "rollup": "^2.46.0",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-terser": "^7.0.2"
+  },
+  "peerDependencies": {
+    "photoswipe": "^5"
   },
   "scripts": {
     "build": "rollup --config rollup.config.js",
